@@ -121,9 +121,6 @@ export class IdentityService {
       throw new ConflictException('An account with this email already exists');
     }
 
-    if (data.roleCode === 'super_admin') {
-      throw new BadRequestException('Super Admin cannot be assigned through invitations');
-    }
     const role = await this.prisma.client.role.findUnique({ where: { code: data.roleCode } });
     if (!role) {
       throw new BadRequestException('Unknown role');
@@ -281,9 +278,6 @@ export class IdentityService {
     }
     if (profile.status !== 'PENDING_APPROVAL') {
       throw new BadRequestException('Only pending users can be approved');
-    }
-    if (data.roleCode === 'super_admin') {
-      throw new BadRequestException('Super Admin cannot be assigned through approvals');
     }
     const role = await this.prisma.client.role.findUnique({ where: { code: data.roleCode } });
     if (!role) {
