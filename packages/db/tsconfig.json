@@ -1,0 +1,9 @@
+{
+  "extends": "@falconv/typescript-config/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: falconv-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: falconv
+      POSTGRES_PASSWORD: falconv
+      POSTGRES_DB: falconv
+    ports:
+      - "5432:5432"
+    volumes:
+      - falconv_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U falconv -d falconv"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: falconv-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - falconv_redis_data:/data
+
+  minio:
+    image: minio/minio:latest
+    container_name: falconv-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: falconv
+      MINIO_ROOT_PASSWORD: falconvsecret
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - falconv_minio_data:/data
+
+volumes:
+  falconv_pg_data:
+  falconv_redis_data:
+  falconv_minio_data:

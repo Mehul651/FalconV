@@ -1,0 +1,22 @@
+{
+  "name": "@falconv/shared",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "generate": "tsc -p tsconfig.json",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "lint": "echo \"lint skipped for shared\"",
+    "test": "echo \"no tests\"",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@falconv/typescript-config": "workspace:*",
+    "typescript": "^5.9.2"
+  }
+}
